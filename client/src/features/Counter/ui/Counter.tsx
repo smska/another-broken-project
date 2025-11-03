@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hook";
-import { useMemo, type JSX } from "react";
+import { useMemo, useEffect, useState, type JSX } from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import {
   addEagle,
@@ -15,6 +15,12 @@ export default function Counter(): JSX.Element {
   console.log(eagles);
   const dispatch = useAppDispatch();
 
+  const [derivedValue, setDerivedValue] = useState(value);
+
+  useEffect(() => {
+    setDerivedValue(value * 2);
+  }, [value]);
+
   const randomNum = (): number => {
     return Math.random() * 1_000_000;
   };
@@ -22,6 +28,13 @@ export default function Counter(): JSX.Element {
   const memoNum = useMemo(() => randomNum(), []);
 
   const num1 = randomNum();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(increment());
+      console.log("Current value from interval:", value);
+    }, 1000);
+  }, [dispatch]);
 
   return (
     <div>
@@ -41,6 +54,7 @@ export default function Counter(): JSX.Element {
       </ButtonGroup>
       <h2>num1: {num1}</h2>
       <h2>memoNum: {memoNum}</h2>
+      <h2>Derived Value: {derivedValue}</h2>
     </div>
   );
 }

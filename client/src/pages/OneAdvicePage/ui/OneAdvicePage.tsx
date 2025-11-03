@@ -9,7 +9,7 @@ export function OneAdvicePage(): JSX.Element {
   const currentAdvice = useAppSelector((state) => state.advice.currentAdvice);
 
   useEffect(() => {
-    dispatch(getOneAdviceThunk(Number(id)));
+    dispatch(getOneAdviceThunk(id as unknown as number));
   }, [id, dispatch]);
   return (
     <>

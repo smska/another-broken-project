@@ -1,4 +1,4 @@
-import { type JSX } from "react";
+import { type JSX, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -9,6 +9,7 @@ import { createAdviceThunk } from "@/entities/advice/redux/adviceThunk";
 
 export default function AdviceHookForm(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [submittedCount, setSubmittedCount] = useState(0);
   const {
     register,
     handleSubmit,
@@ -19,8 +20,13 @@ export default function AdviceHookForm(): JSX.Element {
     mode: "onTouched",
   });
 
+  useEffect(() => {
+    console.log("Form submissions count:", submittedCount);
+  }, []);
+
   const onSubmit = async (data: IRawAdvice): Promise<void> => {
     try {
+      setSubmittedCount(submittedCount + 1);
       dispatch(createAdviceThunk(data));
       reset({ title: "", desc: "" });
     } catch (err) {

@@ -12,9 +12,11 @@ export default function ProtectedRouter({
   isAllowed,
   redirectTo,
 }: Props): JSX.Element {
+  const redirectPath = redirectTo.split("/").map(Number);
+  
   return (
     <div>
-      {isAllowed ? children || <Outlet /> : <Navigate to={redirectTo} />}
+      {isAllowed ? children || <Outlet /> : <Navigate to={redirectPath} />}
     </div>
   );
 }

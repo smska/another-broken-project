@@ -14,6 +14,10 @@ type Props = {
 };
 
 function AdviceCard({ advice, deleteHandler, user }: Props): JSX.Element {
+  const adviceArray = [advice];
+  const firstAdvice = adviceArray.find((a) => a.id === advice.id);
+  const adviceId = firstAdvice.id.toString();
+
   return (
     <Col xs={12} md={6}>
       <Card>
@@ -24,7 +28,7 @@ function AdviceCard({ advice, deleteHandler, user }: Props): JSX.Element {
           {user?.id === advice.authorId && (
             <Button 
               variant="danger" 
-              onClick={() => deleteHandler(advice.id)}
+              onClick={() => deleteHandler(adviceId)}
               className="me-2"
             >
               Удалить

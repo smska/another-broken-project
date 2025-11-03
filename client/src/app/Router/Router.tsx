@@ -15,6 +15,7 @@ import QuotePage from "@/pages/QuotePage/ui/QuotePage";
 
 export default function Router(): JSX.Element {
   const status = useAppSelector((state) => state.user.status);
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -24,7 +25,7 @@ export default function Router(): JSX.Element {
           <Route
             element={
               <ProtectedRouter
-                isAllowed={status !== "logged"}
+                isAllowed={status}
                 redirectTo={CLIENT_ROUTES.HOME}
               />
             }

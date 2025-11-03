@@ -17,6 +17,7 @@ export const counterSlice = createSlice({
   reducers: {
     increment: (state) => {
       state.value += 1;
+      return { ...state, value: state.value };
     },
     decrement: (state) => {
       state.value -= 1;
@@ -26,6 +27,7 @@ export const counterSlice = createSlice({
       state.value += action.payload;
     },
     addEagle: (state, action: PayloadAction<string>) => {
+      initialState.eagles.push(action.payload);
       state.eagles.push(action.payload);
     },
   },

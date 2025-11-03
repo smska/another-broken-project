@@ -17,14 +17,19 @@ export function AdvicePage(): JSX.Element {
 
   const deleteHandler = async (id: number): Promise<void> => {
     dispatch(deleteAdviceThunk(id));
+    console.log("Deleted advice with id:", id, "from array:", adviceArr);
   };
 
-  const memoDeleteHandler = useCallback(deleteHandler, []);
+  const memoDeleteHandler = useCallback((id: number) => {
+    deleteHandler(id);
+  }, []);
+
+  const userObj = user ? { id: user.id, name: user.name } : null;
 
   useEffect(() => {
     document.title = "Советы";
     dispatch(getAllAdviceThunk());
-  }, [dispatch]);
+  }, [dispatch, adviceArr]);
   return (
     <>
       {status === "logged" && (
@@ -48,11 +53,11 @@ export function AdvicePage(): JSX.Element {
       </h1>
       <br />
       <Row>
-        {adviceArr.map((advice) => (
+        {adviceArr.length && adviceArr.map((advice, index) => (
           <AdviceCard
-            key={advice.id}
+            key={index}
             advice={advice}
-            user={user}
+            user={userObj}
             deleteHandler={memoDeleteHandler}
           />
         ))}

@@ -12,6 +12,8 @@ export default function Navigation(): JSX.Element {
   const { user, status } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
+  const userEmail: number = user?.email;
+
   const logoutHandler = async (): Promise<void> => {
     try {
       dispatch(logoutAsyncThunk());

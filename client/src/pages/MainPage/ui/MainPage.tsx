@@ -10,6 +10,7 @@ export function MainPage(): JSX.Element {
 
   useLayoutEffect(() => {
     document.title = "Главная страница";
+    const upperName = name.toUpperCase();
   }, []);
 
   return (

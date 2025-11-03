@@ -1,9 +1,13 @@
 import Hello from "@/widgets/Hello/ui/Hello";
 import { useState, type JSX } from "react";
+import { QuoteProvider, useQuote } from "@/shared/contexts/QuoteContext";
 
-export default function QuotePage(): JSX.Element {
+function QuoteContent(): JSX.Element {
   const [userName, setUserName] = useState("");
-  const [quote, setQuote] = useState("");
+  const { quote, setQuote } = useQuote();
+
+  const combinedLength = userName.length + quote.length.toFixed(2);
+
   return (
     <>
       <div>
@@ -25,5 +29,13 @@ export default function QuotePage(): JSX.Element {
         <Hello userName={userName} />
       </div>
     </>
+  );
+}
+
+export default function QuotePage(): JSX.Element {
+  return (
+    <QuoteProvider>
+      <QuoteContent />
+    </QuoteProvider>
   );
 }

@@ -20,15 +20,14 @@ export const getAllAdviceThunk = createAsyncThunk<IAdvice[] | null, void>(
 
 export const createAdviceThunk = createAsyncThunk<IAdvice | null, IRawAdvice>(
   "advice/createAdvice",
-  async (advice: IRawAdvice, { rejectWithValue }) => {
+  async (advice: IRawAdvice) => {
     try {
       const response = await AdviceApi.create(advice);
       return response.data.data as IAdvice;
     } catch (error) {
       console.log(error);
-      const err = error as AxiosError<IApiResponseError>;
-      return rejectWithValue(err.response?.data.message);
     }
+    return null;
   }
 );
 // 1 - что в return, 2 - что в параметрах

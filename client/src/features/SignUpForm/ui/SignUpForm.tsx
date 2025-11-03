@@ -10,6 +10,7 @@ import { signupAsyncThunk } from "@/entities/user/redux/userThunk";
 
 export default function SignUpForm(): JSX.Element {
   const dispatch = useAppDispatch();
+
   const signUpHandler = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -17,9 +18,9 @@ export default function SignUpForm(): JSX.Element {
     try {
       const formData = new FormData(e.currentTarget);
       const dataForApi: IUserSignUpData = {
-        name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
+        name: formData.get("name"),
+        email: formData.get("email"),
+        password: formData.get("password"),
       };
       const { isValid, error } = UserValidate.validateSignup(dataForApi);
       if (!isValid) return alert(error);

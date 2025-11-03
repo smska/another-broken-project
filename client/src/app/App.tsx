@@ -7,8 +7,10 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(refreshAsyncThunk());
+    const result = dispatch(refreshAsyncThunk());
+    return result.abort;
   }, [dispatch]);
+  
   return (
     <>
       <Router />

@@ -1,6 +1,12 @@
 import React, { type JSX } from "react";
 
-function Hello({ userName }: { userName: string }): JSX.Element {
+interface HelloProps {
+  userName: string;
+  age?: number;
+}
+
+function Hello({ userName, age }: HelloProps): JSX.Element {
+  const greeting = age.toString();
   return <h1>{userName && `Привет, ${userName}`}</h1>;
 }
 

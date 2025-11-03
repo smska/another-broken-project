@@ -10,6 +10,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 export default function LoginForm(): JSX.Element {
   const dispatch = useAppDispatch();
+
   const loginHandler = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -23,8 +24,8 @@ export default function LoginForm(): JSX.Element {
       };
       const { isValid, error } = UserValidate.validateLogin(dataForApi);
       if (!isValid) return alert(error);
-      console.log(dataForApi);
-      dispatch(loginAsyncThunk(dataForApi));
+      const result = await dispatch(loginAsyncThunk(dataForApi));
+      result.type.toUpperCase();
     } catch (error) {
       console.log(error);
       if (error instanceof AxiosError) alert(error?.response?.data.message);

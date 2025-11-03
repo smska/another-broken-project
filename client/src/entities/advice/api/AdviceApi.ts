@@ -1,4 +1,3 @@
-import type { AxiosResponse } from "axios";
 import { axiosInstance } from "../../../shared/lib/axiosInstance";
 import type { IApiResponse } from "../../../shared/types";
 import type { IAdvice, IRawAdvice } from "../model";

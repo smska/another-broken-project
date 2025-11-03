@@ -25,7 +25,7 @@ export default function Router(): JSX.Element {
           <Route
             element={
               <ProtectedRouter
-                isAllowed={status}
+                isAllowed={status !== "logged"}
                 redirectTo={CLIENT_ROUTES.HOME}
               />
             }

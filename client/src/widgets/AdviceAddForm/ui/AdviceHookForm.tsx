@@ -22,11 +22,11 @@ export default function AdviceHookForm(): JSX.Element {
 
   useEffect(() => {
     console.log("Form submissions count:", submittedCount);
-  }, []);
+  }, [submittedCount]);
 
   const onSubmit = async (data: IRawAdvice): Promise<void> => {
     try {
-      setSubmittedCount(submittedCount + 1);
+      setSubmittedCount(prev => prev + 1);
       dispatch(createAdviceThunk(data));
       reset({ title: "", desc: "" });
     } catch (err) {

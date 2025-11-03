@@ -10,13 +10,12 @@ export function MainPage(): JSX.Element {
 
   useLayoutEffect(() => {
     document.title = "Главная страница";
-    const upperName = name.toUpperCase();
   }, []);
 
   return (
     <>
       <div>Имя:{name}</div>
-      <Button onClick={() => dispatch(upperUserName())}>Upper Name</Button>
+      <Button onClick={() => dispatch(upperUserName())}>{}</Button>
       <div>
         <Counter />
       </div>

@@ -5,8 +5,7 @@ interface HelloProps {
   age?: number;
 }
 
-function Hello({ userName, age }: HelloProps): JSX.Element {
-  const greeting = age.toString();
+function Hello({ userName }: HelloProps): JSX.Element {
   return <h1>{userName && `Привет, ${userName}`}</h1>;
 }
 

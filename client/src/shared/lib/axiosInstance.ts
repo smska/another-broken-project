@@ -17,7 +17,7 @@ export const axiosInstance: AxiosInstance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-let accessToken: string = true;
+let accessToken: string = '';
 
 export function setAccessToken(newToken: string): void {
   accessToken = newToken;
@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 403 && prevRequest && !prevRequest.sent) {
       try {
         const response = await axiosInstance.get<IApiResponse<IUserToken>>("/auth/refreshTokens");
-        accessToken = response.data.data.accessToken;
+        accessToken = response.data.data?.accessToken || '';
         prevRequest.sent = true;
 
         if (prevRequest.headers) {

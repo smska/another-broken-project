@@ -11,8 +11,8 @@ export const signupAsyncThunk = createAsyncThunk<
 >("users/signup", async (user: IUserSignUpData, { rejectWithValue }) => {
   try {
       const response = await UserApi.signup(user);
-      if (response.data) setAccessToken(response.data.data.accessToken);
-      return response.data.data; // action.payload
+      if (response.data) setAccessToken(response.data.accessToken);
+      return response.data; // action.payload
   } catch (error) {
     const err = error as AxiosError<IApiResponseError>;
     alert(err.response?.data.message);
@@ -26,8 +26,8 @@ export const loginAsyncThunk = createAsyncThunk<
 >("users/login", async (user: IUserLoginData, { rejectWithValue }) => {
   try {
       const response = await UserApi.login(user);
-      if (response.data) setAccessToken(response.data.data.accessToken);
-      return response.data.data; // action.payload
+      if (response.data) setAccessToken(response.data.accessToken);
+      return response.data; // action.payload
   } catch (error) {
     const err = error as AxiosError<IApiResponseError>;
     alert(err.response?.data.message);
@@ -53,8 +53,8 @@ export const refreshAsyncThunk = createAsyncThunk<IUserToken | null>(
   async (_, { rejectWithValue }) => {
     try {
       const response = await UserApi.refreshTokens();
-      if (response.data) setAccessToken(response.data.data.accessToken);
-      return response.data.data; // action.payload
+      if (response.data) setAccessToken(response.data.accessToken);
+      return response.data; // action.payload
     } catch (error) {
       console.log(error);
       const err = error as AxiosError<IApiResponseError>;

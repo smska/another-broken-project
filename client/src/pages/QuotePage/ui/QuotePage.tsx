@@ -6,7 +6,6 @@ function QuoteContent(): JSX.Element {
   const [userName, setUserName] = useState("");
   const { quote, setQuote } = useQuote();
 
-  const combinedLength = userName.length + quote.length.toFixed(2);
 
   return (
     <>

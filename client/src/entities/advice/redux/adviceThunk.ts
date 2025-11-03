@@ -9,7 +9,7 @@ export const getAllAdviceThunk = createAsyncThunk<IAdvice[] | null, void>(
   async (_, { rejectWithValue }) => {
     try {
       const response = await AdviceApi.getAll();
-      return response.data.data as IAdvice[]; // action.payload
+      return response.data as IAdvice[]; // action.payload
     } catch (error) {
       console.log(error);
       const err = error as AxiosError<IApiResponseError>;
@@ -20,14 +20,15 @@ export const getAllAdviceThunk = createAsyncThunk<IAdvice[] | null, void>(
 
 export const createAdviceThunk = createAsyncThunk<IAdvice | null, IRawAdvice>(
   "advice/createAdvice",
-  async (advice: IRawAdvice) => {
+  async (advice: IRawAdvice, { rejectWithValue }) => {
     try {
       const response = await AdviceApi.create(advice);
-      return response.data.data as IAdvice;
+      return response.data as IAdvice;
     } catch (error) {
       console.log(error);
+      const err = error as AxiosError<IApiResponseError>;
+      return rejectWithValue(err.response?.data.message);
     }
-    return null;
   }
 );
 // 1 - что в return, 2 - что в параметрах
@@ -50,7 +51,7 @@ export const getOneAdviceThunk = createAsyncThunk<IAdvice | null, number>(
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await AdviceApi.getOne(id);
-      return response.data.data as IAdvice; // action.payload
+      return response.data as IAdvice; // action.payload
     } catch (error) {
       console.log(error);
       const err = error as AxiosError<IApiResponseError>;

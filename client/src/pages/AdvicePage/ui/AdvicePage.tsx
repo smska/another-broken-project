@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type JSX } from "react";
+import { useCallback, useEffect, useMemo, useState, type JSX } from "react";
 import AdviceCard from "@/widgets/AdviceCard/ui/AdviceCard";
 import { Button, Row } from "react-bootstrap";
 import AdviceHookForm from "@/widgets/AdviceAddForm/ui/AdviceHookForm";
@@ -8,6 +8,7 @@ import {
   getAllAdviceThunk,
 } from "@/entities/advice/redux/adviceThunk";
 import { sortedByTitle } from "@/entities/advice/redux/adviceSlice";
+import type { IUserDB } from "@/entities/user/model";
 
 export function AdvicePage(): JSX.Element {
   const [isGreen, setIsGreen] = useState(false);
@@ -15,21 +16,24 @@ export function AdvicePage(): JSX.Element {
   const adviceArr = useAppSelector((state) => state.advice.adviceArr);
   const dispatch = useAppDispatch();
 
-  const deleteHandler = async (id: number): Promise<void> => {
+  const deleteHandler = useCallback(async (id: number): Promise<void> => {
     dispatch(deleteAdviceThunk(id));
     console.log("Deleted advice with id:", id, "from array:", adviceArr);
-  };
+  }, [dispatch, adviceArr]);
 
-  const memoDeleteHandler = useCallback((id: number) => {
-    deleteHandler(id);
-  }, []);
+  const memoDeleteHandler = useCallback(async (id: number) => {
+    await deleteHandler(id);
+  }, [deleteHandler]);
 
-  const userObj = user ? { id: user.id, name: user.name } : null;
+
+  const userObj = useMemo(() => {
+    return user ? { id: user.id, name: user.name } : null;
+  }, [user]);
 
   useEffect(() => {
     document.title = "Советы";
     dispatch(getAllAdviceThunk());
-  }, [dispatch, adviceArr]);
+  }, [dispatch]);
   return (
     <>
       {status === "logged" && (
@@ -53,12 +57,12 @@ export function AdvicePage(): JSX.Element {
       </h1>
       <br />
       <Row>
-        {adviceArr.length && adviceArr.map((advice, index) => (
+        {adviceArr.length > 0 && adviceArr.map((advice) => (
           <AdviceCard
-            key={index}
+            key={advice.id}
             advice={advice}
-            user={userObj}
-            deleteHandler={memoDeleteHandler}
+            user={userObj as IUserDB}
+            deleteHandler={async () => await memoDeleteHandler(Number(advice.id))}
           />
         ))}
       </Row>

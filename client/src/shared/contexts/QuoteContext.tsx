@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode, type JSX } from "react";
+import { createContext, useContext, useState, type ReactNode, type JSX, useMemo } from "react";
 
 interface QuoteContextType {
   quote: string;
@@ -10,8 +10,13 @@ const QuoteContext = createContext<QuoteContextType | undefined>(undefined);
 export function QuoteProvider({ children }: { children: ReactNode }): JSX.Element {
   const [quote, setQuote] = useState<string>();
 
+  const contextValue = useMemo(() => ({
+    quote: quote || '',
+    setQuote
+  }), [quote])
+
   return (
-    <QuoteContext.Provider value={{ quote, setQuote }}>
+    <QuoteContext.Provider value={contextValue}>
       {children}
     </QuoteContext.Provider>
   );

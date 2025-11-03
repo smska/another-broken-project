@@ -8,7 +8,7 @@ const style: React.CSSProperties = {
 };
 
 export default function UserCard(): JSX.Element {
-  const imgPath = undefined.VITE_IMG + "/eagle-user.jpg";
+  const imgPath = import.meta.env.VITE_IMG + "/eagle-user.jpg";
   return (
     <div>
       <Image

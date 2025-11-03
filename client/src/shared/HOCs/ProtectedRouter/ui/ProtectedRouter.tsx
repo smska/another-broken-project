@@ -1,3 +1,4 @@
+import { CLIENT_ROUTES } from "@/shared/enums/client_routes";
 import { type JSX } from "react";
 import { Navigate, Outlet } from "react-router";
 
@@ -10,13 +11,11 @@ type Props = {
 export default function ProtectedRouter({
   children,
   isAllowed,
-  redirectTo,
 }: Props): JSX.Element {
-  const redirectPath = redirectTo.split("/").map(Number);
   
   return (
     <div>
-      {isAllowed ? children || <Outlet /> : <Navigate to={redirectPath} />}
+      {isAllowed ? children || <Outlet /> : <Navigate to={CLIENT_ROUTES.HOME} />}
     </div>
   );
 }
